@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request; 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -47,15 +48,30 @@ class LoginController extends Controller
     public function adminLogin(Request $request)
     {
         $this->validate($request, [
-            'user_id'   => 'required',
+            'user_id'   => 'required|exists:admins,user_id',
             'password' => 'required|min:6'
         ]);
 
-        if (Auth::guard('admin')->attempt(['user_id' => $request->user_id, 'password' => $request->password], $request->get('remember'))) {
 
-            return redirect()->intended('/home');
+        $auth = $request->only('user_id', 'password');
+      
+        if (auth()->guard('admin')->attempt($auth)) {
+            return redirect()->intended(route('admin.home'));
         }
-        return back()->withInput($request->only('user_id', 'remember'));
+        return redirect()->back()->with(['error' => 'Email / Password Salah']);
+        
+
+        // if (Auth::guard('admin')->attempt(['user_id' => $request->user_id, 'password' => $request->password], $request->get('remember'))) {
+
+        //     return redirect()->intended('/home');
+        // }
+        // return back()->withInput($request->only('user_id', 'remember'));
+    }
+
+    public function logout()
+    {
+        auth()->guard('admin')->logout(); //JADI KITA LOGOUT SESSION DARI GUARD CUSTOMER
+        return redirect(route('admin.login'));
     }
 
 }
