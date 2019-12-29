@@ -40,10 +40,12 @@ class LoginController extends Controller
         $this->middleware('guest:admin')->except('logout');
     }
 
+
     public function showAdminLoginForm()
     {
         return view('auth.login');
     }
+
 
     public function adminLogin(Request $request)
     {
@@ -52,25 +54,18 @@ class LoginController extends Controller
             'password' => 'required|min:6'
         ]);
 
-
         $auth = $request->only('user_id', 'password');
       
         if (auth()->guard('admin')->attempt($auth)) {
             return redirect()->intended(route('admin.home'));
         }
         return redirect()->back()->with(['error' => 'Email / Password Salah']);
-        
-
-        // if (Auth::guard('admin')->attempt(['user_id' => $request->user_id, 'password' => $request->password], $request->get('remember'))) {
-
-        //     return redirect()->intended('/home');
-        // }
-        // return back()->withInput($request->only('user_id', 'remember'));
     }
+
 
     public function logout()
     {
-        auth()->guard('admin')->logout(); //JADI KITA LOGOUT SESSION DARI GUARD CUSTOMER
+        auth()->guard('admin')->logout();
         return redirect(route('admin.login'));
     }
 
