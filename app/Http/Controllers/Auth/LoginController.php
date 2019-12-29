@@ -59,7 +59,7 @@ class LoginController extends Controller
         if (auth()->guard('admin')->attempt($auth)) {
             return redirect()->intended(route('admin.home'));
         }
-        return redirect()->back()->with(['error' => 'Email / Password Salah']);
+        return redirect()->back()->with(['error' => 'User_ID / Password Salah']);
     }
 
 
