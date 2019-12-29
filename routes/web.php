@@ -16,3 +16,6 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+Route::view('/home', 'home')->name('home');
+Route::get('/login', 'Auth\LoginController@showAdminLoginForm')->name('login');
