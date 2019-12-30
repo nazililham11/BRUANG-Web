@@ -2,28 +2,21 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Room;
-use App\Booking;
-use App\ClassSession;
-use Illuminate\Http\Request; 
-use App\ClassSchedule;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
-use Validator;
+use Illuminate\Http\Request;
 
-class BookingController extends Controller
+class RoomController extends Controller
 {
-
-    public function getFreeRoom(Request $request)
+    public function index(Request $request)
     {
 
-        $validatedData = Validator::make(request()->all(), [
+        $validator = Validator::make(request()->all(), [
             "dates"    => "required|array|min:1",
             "dates.*"  => "required|date|after_or_equal:today",
         ]);
 
-        if ($validatedData->fails()) {
-            return response()->json(['error' => $validatedData->errors()]);        
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()]);        
         }
 
         //Get Booking Item
@@ -65,11 +58,4 @@ class BookingController extends Controller
         return response()->json(['success' => $datas], 200); 
         
     }
-
-    public function getBookings(Request $request)
-    {
-    	
-    }
-
-    
 }
