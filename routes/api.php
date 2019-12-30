@@ -17,4 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('booking', 'Api\BookingController@getFreeRoom')->name('getRoom');
+
 Route::post('login', 'Api\AuthController@login');
