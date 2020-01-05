@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Room;
 use Validator;
+use App\Booking;
+use App\ClassSession;
+use App\ClassSchedule;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Auth; 
@@ -32,10 +36,16 @@ class AuthController extends Controller
 	   	} 
 	}
 
-	public function details() 
+	public function details(Request $request) 
     { 
         $user = Auth::user(); 
-        return response()->json(['success' => $user], 200); 
+        $token = $request->header('Authorization');
+        $token = str_replace('Bearer ', '', $token);
+        $success['status'] = 'success';
+        $success['message'] = 'Get User Details Success';
+        $success['user'] = $user->only('name', 'user_id');
+        $success['user']['token'] =  $token; 
+        return response()->json($success, 200); 
     } 
 
     public function logout() 
