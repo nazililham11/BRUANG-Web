@@ -43,7 +43,20 @@ class BookingController extends Controller
 
         $user = Auth::user(); 
 
-        //Get Booking Item
+        $booking = Booking::create([
+            'user_id' => $user->id,
+            'course_id' => 1,
+            'class_schedule_id' => $request->class_schedule_id,
+            'title' => $request->title,
+            'status' => 'Pending',
+            'date' => $request->date,
+            'day' => $request->day,
+            'message' => '',
+        ]);
+        $booking->save();
+
+        DB::commit();
+        
         $bookings = DB::table('bookings')->where('user_id', $user->id)->get();
 
 
