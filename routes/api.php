@@ -24,11 +24,11 @@ Route::group(['prefix' => 'v1'], function(){
 
 	Route::group(['middleware' => 'auth:api'], function(){
 	   	Route::post('logout', 'Api\AuthController@logout')->name('api.logout');
-	   	Route::post('details', 'Api\AuthController@details')->name('api.details');
+	   	Route::get('details', 'Api\AuthController@details')->name('api.details');
 
 		Route::post('rooms', 'Api\RoomController@index')->name('api.getRooms');
-		Route::get('bookings', 'Api\BookingController@index')->name('api.getBookings');
-		Route::post('createbookin', 'Api\BookingController@store')->name('api.create.booking');
+		Route::get('booking', 'Api\BookingController@index')->name('api.getBookings');
+		Route::post('booking/create', 'Api\BookingController@store')->name('api.create.booking');
 
 		Route::any('{any}', function() {
 		    return response()->json(['error' => '404 Not Found'], 200); 
