@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
+	protected $guarded = [];
     public function class_schedule()
     {
         return $this->belongsTo(ClassSchedule::class);
