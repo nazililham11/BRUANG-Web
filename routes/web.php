@@ -20,7 +20,9 @@ Auth::routes();
 Route::get('/login', 'Auth\LoginController@showAdminLoginForm')->name('admin.login');
 Route::post('/login', 'Auth\LoginController@adminLogin')->name('admin.post_login');
 
-Route::group(['middleware' => 'admin'], function() {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
 	Route::view('/home', 'home')->name('admin.home');
+	Route::post('/booking/{id}', 'BookingController@action')->name('admin.booking.action');
+	Route::get('/booking', 'BookingController@index')->name('admin.booking.index');
     Route::get('logout', 'Auth\LoginController@logout')->name('admin.logout');
 });
