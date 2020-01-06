@@ -6,14 +6,16 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header"> {{ isset($url) ? ucwords($url) : ""}} {{ __('Login') }}</div>
+                    <div class="card-header"> {{ isset($url) ? ucwords($url) : ""}} {{ __('Admin Login') }}</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.post_login') }}" aria-label="{{ __('Login') }}">
                             @csrf
-
+                        <div class="row justify-content-center mb-5">
+                            <img src="{{ asset('img/bruang-logo.png') }}" style="max-width: 12rem; max-height: 12rem;">
+                        </div>
                         <div class="form-group row">
-                            <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="user_id" class="col-md-4 col-form-label text-md-right">{{ __('User ID') }}</label>
 
                             <div class="col-md-6">
                                 <input id="user_id" type="text" class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ old('user_id') }}" required autocomplete="user_id" autofocus>
